@@ -1,38 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Xanh+Mono:ital@1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
 .App {
-  text-align: center;
+  font-family: "Xanh Mono";
+  background-color: rgb(255 255 0 / 77%);
 }
-
-.App-logo {
-  height: 40vmin;
+.loading {
+  background-color: rgb(255 255 0 / 77%);
+  height: 100vh;
+  /* max-height: 100%; */
+}
+.logo {
+  height: auto;
+  width: 50px;
   pointer-events: none;
+  /* background-blend-mode: color; */
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.login-page {
   display: flex;
-  flex-direction: column;
+  max-height: 100%;
+  height: 100vh;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-wrap: wrap;
+  background-color: bisque;
 }
-
-.App-link {
-  color: #61dafb;
+.loginimage {
+  max-height: 300px;
+  max-width: 500px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px;
+  background-color: #fff;
+  max-height: 300px;
+  height: 100%;
+  margin: 0%;
+}
+.signuppage {
+  display: flex;
+  max-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: bisque;
+}
+.signupimage {
+  max-height: 700px;
+  max-width: 500px;
+}
+.signup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px;
+  background-color: #fff;
+  max-height: 700px;
+  margin: 0%;
+}
+.pizzas-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 15px;
+  justify-content: center;
+}
+.img-container {
+  display: flex;
+  justify-content: center;
+}
+.flex-container {
+  display: flex;
+  justify-content: center;
+}
+.cart-page {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 15px;
+  justify-content: center;
+  height: 100vh;
+  justify-content: space-around;
+}
+.card-head {
+  min-height: 500px;
+  height: 100%;
+  bottom: whitesmoke;
+}
+.total {
+  min-height: 500px;
+  height: 100%;
+  bottom: whitesmoke;
 }
