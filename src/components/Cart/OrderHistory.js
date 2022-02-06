@@ -60,6 +60,8 @@ function OrdersList({ orders }) {
           <img
             src="https://cdn.dribbble.com/users/3956545/screenshots/15463522/0311.jpg"
             alt="nothing"
+            height="200"
+            width="200"
           />
           <br />
           <Typography variant="h6">
