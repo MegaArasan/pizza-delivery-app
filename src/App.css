@@ -1,71 +1,42 @@
 @import url("https://fonts.googleapis.com/css2?family=Xanh+Mono:ital@1&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Aladin&family=Roboto+Condensed&family=The+Nautigal:wght@700&family=Yellowtail&display=swap");
 
 .App {
-  font-family: "Xanh Mono";
-  background-color: rgb(255 255 0 / 77%);
-}
-.loading {
-  background-color: rgb(255 255 0 / 77%);
   height: 100vh;
-  /* max-height: 100%; */
 }
 .logo {
-  height: auto;
-  width: 50px;
-  pointer-events: none;
-  /* background-blend-mode: color; */
+  max-width: 60px;
 }
-.login-page {
+.signuppage,
+.loginpage,
+.forgotpage,
+.resetpage {
   display: flex;
-  max-height: 100%;
   height: 100vh;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  background-color: bisque;
-}
-.loginimage {
-  max-height: 300px;
-  max-width: 500px;
-}
-.login {
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  max-width: 500px;
-  background-color: #fff;
-  max-height: 300px;
-  height: 100%;
-  margin: 0%;
+  background-image: url(https://media.istockphoto.com/photos/wood-fired-pizza-with-flames-picture-id603873020?k=20&m=603873020&s=612x612&w=0&h=yxwLPQA4QnphxjltXV6uQC5wW73_a5jG83-W9KgUglY=);
+  background-size: cover;
+  justify-content: space-evenly;
+  text-align: center;
 }
-.signuppage {
-  display: flex;
-  max-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  background-color: bisque;
-}
-.signupimage {
-  max-height: 700px;
-  max-width: 500px;
-}
-.signup {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  max-width: 500px;
-  background-color: #fff;
-  max-height: 700px;
-  margin: 0%;
+.formcontainer {
+  background: rgba(240, 242, 247, 0.55);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(14.5px);
+  -webkit-backdrop-filter: blur(14.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  max-width: 320px;
+  border-radius: 15px;
+  padding: 10px;
 }
 .pizzas-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   padding: 15px;
   justify-content: center;
 }
@@ -77,22 +48,62 @@
   display: flex;
   justify-content: center;
 }
+.flexcontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.cart-list {
+  background-color: beige;
+}
 .cart-page {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   padding: 15px;
   justify-content: center;
-  height: 100vh;
   justify-content: space-around;
-}
-.card-head {
-  min-height: 500px;
-  height: 100%;
-  bottom: whitesmoke;
 }
 .total {
   min-height: 500px;
   height: 100%;
   bottom: whitesmoke;
+}
+.pageContainer {
+  background-color: #eeeeee;
+  padding-bottom: 96px;
+  min-height: 70%;
+  min-height: -webkit-calc(100% - 186px);
+  min-height: -moz-calc(100% - 186px);
+  min-height: calc(100% - 186px);
+}
+.hero {
+  width: 50%;
+  margin: 0px auto;
+  padding: 25px;
+  line-height: 60px;
+}
+.paragraph {
+  margin-top: 20px;
+  text-align: center;
+  line-height: 20px;
+  color: gray;
+}
+.stat {
+  padding: 8px;
+}
+.cartpage {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  justify-content: space-evenly;
+}
+@media (max-width: 420px) {
+  .signuppage {
+    height: 100%;
+  }
+  .formcontainer {
+    padding: 2px;
+  }
 }
