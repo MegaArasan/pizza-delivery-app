@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Button, IconButton, Typography, TextField, Grid } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Autocomplete from "@mui/material/Autocomplete";
+import { Button, IconButton, Typography } from "@mui/material";
 import { API_URL } from "../../globalconstant.js";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Cartproduct } from "./Cartproduct.js";
 import { useHistory } from "react-router-dom";
 
 export function Cart() {
+  const history = useHistory();
   const [switchedit, setswitchedit] = useState(0);
   const data = JSON.parse(localStorage.getItem("user"));
+  const username = localStorage.getItem("Username");
+  // const user = JSON.parse(localStorage.getItem("user"));
+  const cart = JSON.parse(localStorage.getItem("cart"));
   const id = data._id;
   const [products, setproducts] = useState();
   const getProducts = () => {
@@ -52,7 +51,64 @@ export function Cart() {
       : 0;
   };
   // console.log(Total());
-  const [open, setopen] = useState(false);
+  // const [open, setopen] = useState(false);
+  const includestax = Total() + 14 / 100 + (4.5 / 100) * Total();
+  const totalAmount = Math.round(includestax);
+  let date = new Date();
+  //   // replace "/" with "."
+  //   // toUTCString is a method to get a timestamp
+  date = date.toISOString();
+  const onSubmit = () => {
+    const data = {
+      username: username,
+      products: cart,
+      amountPaid: totalAmount,
+      datePaid: date,
+    };
+    // console.log(data);
+    fetch(`${API_URL}/pizzas/payment`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((datas) => {
+        // console.log(datas);
+        displayRazorpay(datas);
+        localStorage.removeItem("cart");
+      });
+  };
+  async function displayRazorpay(datas) {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+    if (!res) {
+      alert("Razorpay sdk failed to load.Are you online");
+      return;
+    }
+
+    // const data1 = JSON.parse(localStorage.getItem("order"));
+    // const data = data1.data;
+    // // console.log(data1);
+    const options = {
+      key: "rzp_test_wt6S48PF3wQ702",
+      amount: datas.amount,
+      currency: "INR",
+      name: "King Cars",
+      description: "Booking Transaction",
+      image:
+        "https://image.shutterstock.com/z/stock-vector-king-car-logo-design-template-vector-illustration-466912277.jpg",
+      order_id: datas.id,
+      prefill: {
+        name: username,
+        contact: data.phoneno,
+        email: data.email,
+      },
+    };
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+    setTimeout(() => history.push("/menu"), 20000);
+  }
   return products ? (
     <section className="cart-list">
       <Typography variant="h2" sx={{ fontFamily: "Xuno" }}>
@@ -110,7 +166,7 @@ export function Cart() {
               </Typography>
               <Button
                 onClick={() => {
-                  setopen((prev) => !prev);
+                  onSubmit();
                 }}
                 variant="contained"
                 color="warning"
@@ -131,115 +187,129 @@ export function Cart() {
           )}
         </div>
       </div>
-      <Paymentmodal open={open} setopen={setopen} />
+      {/* <Paymentmodal open={open} setopen={setopen} /> */}
     </section>
   ) : (
-    <h5>No Items in your cart.please start shopping</h5>
+    <h3>No Items in your cart.please start shopping</h3>
   );
 }
 
-function Paymentmodal({ open, setopen }) {
-  const history = useHistory();
-  const username = localStorage.getItem("Username");
-  const user = JSON.parse(localStorage.getItem("user"));
-  const cart = JSON.parse(localStorage.getItem("cart"));
-  const [method, setMethod] = useState({});
-  const paymentMethods = [
-    { title: "Bank Transfer" },
-    { title: "Cash" },
-    { title: "Credit Card" },
-    { title: "PayPal" },
-    { title: "Others" },
-  ];
-  let date = new Date();
-  // replace "/" with "."
-  // toUTCString is a method to get a timestamp
-  date = date.toISOString();
-  const Total = () => {
-    const cart = JSON.parse(localStorage.getItem("cart"));
-    // console.log(cart);
-    // console.log(typeof cart);
-    return cart
-      ? cart
-          .map((product) => product.totalamount)
-          .reduce((curr, sum) => sum + curr, 0)
-      : 0;
-  };
-  console.log(cart);
-  const includestax = Total() + 14 / 100 + (4.5 / 100) * Total();
-  const handleSubmitPayment = () => {
-    const data = {
-      username: username,
-      products: cart,
-      amountPaid: includestax,
-      datePaid: date,
-      paymentMethod: method.title,
+function loadScript(src) {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => {
+      resolve(true);
     };
-    console.log(data);
-    fetch(`${API_URL}/pizzas/payment`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
-    }).then(() => {
-      localStorage.removeItem("cart");
-      history.push("/menu");
-    });
-  };
-  return (
-    <Dialog
-      onClose={() => setopen(false)}
-      aria-labelledby="customized-dialog-title"
-      open={open}
-      fullWidth
-    >
-      <DialogTitle
-        id="customized-dialog-title"
-        style={{ paddingLeft: "20px", color: "inherit" }}
-      >
-        Payment
-      </DialogTitle>
-      <DialogContent dividers>
-        <Typography variant="h5">
-          <b>Amount to be paid:</b>
-          {includestax}
-        </Typography>
-        <Typography variant="h5">
-          <b>Delivered to:</b>
-          {user.contactAddress}
-        </Typography>
-        <Typography variant="h5">
-          <b>Date:</b>
-          {date}
-        </Typography>
-        <Grid item>
-          <Autocomplete
-            id="combo-box-demo"
-            options={paymentMethods}
-            getOptionLabel={(option) => option.title}
-            onChange={(event, value) => setMethod(value)}
-            style={{ width: "96%", marginLeft: "10px" }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Payment Method"
-                variant="outlined"
-              />
-            )}
-          />
-        </Grid>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          autoFocus
-          onClick={() => {
-            handleSubmitPayment();
-          }}
-          variant="contained"
-          style={{ marginRight: "25px" }}
-        >
-          Pay
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
+    script.onerror = () => {
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
 }
+
+// function Paymentmodal({ open, setopen }) {
+//   const history = useHistory();
+//   const username = localStorage.getItem("Username");
+//   const user = JSON.parse(localStorage.getItem("user"));
+//   const cart = JSON.parse(localStorage.getItem("cart"));
+//   const [method, setMethod] = useState({});
+//   const paymentMethods = [
+//     { title: "Bank Transfer" },
+//     { title: "Cash" },
+//     { title: "Credit Card" },
+//     { title: "PayPal" },
+//     { title: "Others" },
+//   ];
+//   let date = new Date();
+//   // replace "/" with "."
+//   // toUTCString is a method to get a timestamp
+//   date = date.toISOString();
+//   const Total = () => {
+//     const cart = JSON.parse(localStorage.getItem("cart"));
+//     // console.log(cart);
+//     // console.log(typeof cart);
+//     return cart
+//       ? cart
+//           .map((product) => product.totalamount)
+//           .reduce((curr, sum) => sum + curr, 0)
+//       : 0;
+//   };
+//   console.log(cart);
+//   const includestax = Total() + 14 / 100 + (4.5 / 100) * Total();
+//   const handleSubmitPayment = () => {
+//     const data = {
+//       username: username,
+//       products: cart,
+//       amountPaid: includestax,
+//       datePaid: date,
+//       paymentMethod: method.title,
+//     };
+//     console.log(data);
+//     fetch(`${API_URL}/pizzas/payment`, {
+//       method: "POST",
+//       body: JSON.stringify(data),
+//       headers: { "Content-Type": "application/json" },
+//     }).then(() => {
+//       localStorage.removeItem("cart");
+//       history.push("/menu");
+//     });
+//   };
+//   return (
+//     <Dialog
+//       onClose={() => setopen(false)}
+//       aria-labelledby="customized-dialog-title"
+//       open={open}
+//       fullWidth
+//     >
+//       <DialogTitle
+//         id="customized-dialog-title"
+//         style={{ paddingLeft: "20px", color: "inherit" }}
+//       >
+//         Payment
+//       </DialogTitle>
+//       <DialogContent dividers>
+//         <Typography variant="h5">
+//           <b>Amount to be paid:</b>
+//           {includestax}
+//         </Typography>
+//         <Typography variant="h5">
+//           <b>Delivered to:</b>
+//           {user.contactAddress}
+//         </Typography>
+//         <Typography variant="h5">
+//           <b>Date:</b>
+//           {date}
+//         </Typography>
+//         <Grid item>
+//           <Autocomplete
+//             id="combo-box-demo"
+//             options={paymentMethods}
+//             getOptionLabel={(option) => option.title}
+//             onChange={(event, value) => setMethod(value)}
+//             style={{ width: "96%", marginLeft: "10px" }}
+//             renderInput={(params) => (
+//               <TextField
+//                 {...params}
+//                 label="Payment Method"
+//                 variant="outlined"
+//               />
+//             )}
+//           />
+//         </Grid>
+//       </DialogContent>
+//       <DialogActions>
+//         <Button
+//           autoFocus
+//           onClick={() => {
+//             handleSubmitPayment();
+//           }}
+//           variant="contained"
+//           style={{ marginRight: "25px" }}
+//         >
+//           Pay
+//         </Button>
+//       </DialogActions>
+//     </Dialog>
+//   );
+// }
