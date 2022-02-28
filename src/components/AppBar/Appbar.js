@@ -92,13 +92,13 @@ export function Appbar() {
             </DialogContentText>
           </DialogContent>
         </Dialog>
-        <Button
+        {/* <Button
           // sx={{ display: { xs: "none", sm: "block" } }}
           onClick={() => history.push("/cart")}
           variant="text"
         >
           cart
-        </Button>
+        </Button> */}
         <IconButton
           sx={{ ml: { xs: "auto", sm: 0 } }}
           className="avatar"
@@ -125,15 +125,13 @@ export function Appbar() {
               {Name ? Name : localStorage.getItem("Username")}
             </Typography>
           </MenuItem>
-          <MenuItem  onClick={handleClickOpen}>
-            Contact us
-          </MenuItem>
-          <MenuItem onClick={() => history.push("/menu")}>
-            Home
-          </MenuItem>
+
+          <MenuItem onClick={() => history.push("/menu")}>Home</MenuItem>
+          <MenuItem onClick={() => history.push("/cart")}>Cart</MenuItem>
           <MenuItem onClick={() => history.push("/orderhistory")}>
             Order History
           </MenuItem>
+          <MenuItem onClick={handleClickOpen}>Contact us</MenuItem>
           <MenuItem onClick={() => history.push("/settings")}>
             Settings
           </MenuItem>
