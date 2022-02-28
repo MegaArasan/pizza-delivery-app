@@ -109,7 +109,7 @@ export function Cart() {
     paymentObject.open();
     setTimeout(() => history.push("/menu"), 20000);
   }
-  return products ? (
+  return products.length > 0 ? (
     <section className="cart-list">
       <Typography variant="h2" sx={{ fontFamily: "Xuno" }}>
         My Cart🛒

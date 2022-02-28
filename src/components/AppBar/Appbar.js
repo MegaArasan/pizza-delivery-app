@@ -78,8 +78,7 @@ export function Appbar() {
           <DialogTitle>Contact</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To tell us the query, please enter your email address and your
-              query here. We will send updates occasionally.
+              Tell us the query and We will send updates occasionally.
             </DialogContentText>
             <DialogTitle>Email: {user.email} </DialogTitle>
 
