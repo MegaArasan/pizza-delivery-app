@@ -1,9 +1,9 @@
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import MenuIcon from "@mui/icons-material/Menu";
+// import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
-import Drawer from "@mui/material/Drawer";
-import CloseIcon from "@mui/icons-material/Close";
+// import Drawer from "@mui/material/Drawer";
+// import CloseIcon from "@mui/icons-material/Close";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
@@ -18,13 +18,13 @@ import Avatar from "@mui/material/Avatar";
 
 export function Appbar() {
   const user = JSON.parse(localStorage.getItem("user"));
-  const [opened, setopened] = useState(false);
-  const handleDrawerOpen = () => {
-    setopened(true);
-  };
-  const handleDrawerClose = () => {
-    setopened(false);
-  };
+  // const [opened, setopened] = useState(false);
+  // const handleDrawerOpen = () => {
+  //   setopened(true);
+  // };
+  // const handleDrawerClose = () => {
+  //   setopened(false);
+  // };
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -60,7 +60,7 @@ export function Appbar() {
         >
           Mega's Pizza
         </Typography>
-        <Button
+        {/* <Button
           sx={{ ml: "auto", display: { xs: "none", sm: "block" } }}
           onClick={() => history.push("/menu")}
           variant="text"
@@ -73,7 +73,7 @@ export function Appbar() {
           variant="text"
         >
           Contact us
-        </Button>
+        </Button> */}
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Contact</DialogTitle>
           <DialogContent>
@@ -93,7 +93,7 @@ export function Appbar() {
           </DialogContent>
         </Dialog>
         <Button
-          sx={{ display: { xs: "none", sm: "block" } }}
+          // sx={{ display: { xs: "none", sm: "block" } }}
           onClick={() => history.push("/cart")}
           variant="text"
         >
@@ -125,6 +125,12 @@ export function Appbar() {
               {Name ? Name : localStorage.getItem("Username")}
             </Typography>
           </MenuItem>
+          <MenuItem  onClick={handleClickOpen}>
+            Contact us
+          </MenuItem>
+          <MenuItem onClick={() => history.push("/menu")}>
+            Home
+          </MenuItem>
           <MenuItem onClick={() => history.push("/orderhistory")}>
             Order History
           </MenuItem>
@@ -141,7 +147,7 @@ export function Appbar() {
             Log Out
           </MenuItem>
         </Menu>
-        <IconButton
+        {/* <IconButton
           sx={{ display: { xs: "block", sm: "none" } }}
           onClick={handleDrawerOpen}
         >
@@ -183,7 +189,7 @@ export function Appbar() {
           <Button onClick={() => history.push("/cart")} variant="text">
             cart
           </Button>
-        </Drawer>
+        </Drawer> */}
       </Toolbar>
     </AppBar>
   );
