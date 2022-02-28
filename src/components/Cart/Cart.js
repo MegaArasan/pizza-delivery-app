@@ -109,7 +109,7 @@ export function Cart() {
     paymentObject.open();
     setTimeout(() => history.push("/menu"), 20000);
   }
-  return products.length > 0 ? (
+  return products ? (
     <section className="cart-list">
       <Typography variant="h2" sx={{ fontFamily: "Xuno" }}>
         My Cart🛒
@@ -187,7 +187,6 @@ export function Cart() {
           )}
         </div>
       </div>
-      {/* <Paymentmodal open={open} setopen={setopen} /> */}
     </section>
   ) : (
     <h3>No Items in your cart.please start shopping</h3>
@@ -207,109 +206,3 @@ function loadScript(src) {
     document.body.appendChild(script);
   });
 }
-
-// function Paymentmodal({ open, setopen }) {
-//   const history = useHistory();
-//   const username = localStorage.getItem("Username");
-//   const user = JSON.parse(localStorage.getItem("user"));
-//   const cart = JSON.parse(localStorage.getItem("cart"));
-//   const [method, setMethod] = useState({});
-//   const paymentMethods = [
-//     { title: "Bank Transfer" },
-//     { title: "Cash" },
-//     { title: "Credit Card" },
-//     { title: "PayPal" },
-//     { title: "Others" },
-//   ];
-//   let date = new Date();
-//   // replace "/" with "."
-//   // toUTCString is a method to get a timestamp
-//   date = date.toISOString();
-//   const Total = () => {
-//     const cart = JSON.parse(localStorage.getItem("cart"));
-//     // console.log(cart);
-//     // console.log(typeof cart);
-//     return cart
-//       ? cart
-//           .map((product) => product.totalamount)
-//           .reduce((curr, sum) => sum + curr, 0)
-//       : 0;
-//   };
-//   console.log(cart);
-//   const includestax = Total() + 14 / 100 + (4.5 / 100) * Total();
-//   const handleSubmitPayment = () => {
-//     const data = {
-//       username: username,
-//       products: cart,
-//       amountPaid: includestax,
-//       datePaid: date,
-//       paymentMethod: method.title,
-//     };
-//     console.log(data);
-//     fetch(`${API_URL}/pizzas/payment`, {
-//       method: "POST",
-//       body: JSON.stringify(data),
-//       headers: { "Content-Type": "application/json" },
-//     }).then(() => {
-//       localStorage.removeItem("cart");
-//       history.push("/menu");
-//     });
-//   };
-//   return (
-//     <Dialog
-//       onClose={() => setopen(false)}
-//       aria-labelledby="customized-dialog-title"
-//       open={open}
-//       fullWidth
-//     >
-//       <DialogTitle
-//         id="customized-dialog-title"
-//         style={{ paddingLeft: "20px", color: "inherit" }}
-//       >
-//         Payment
-//       </DialogTitle>
-//       <DialogContent dividers>
-//         <Typography variant="h5">
-//           <b>Amount to be paid:</b>
-//           {includestax}
-//         </Typography>
-//         <Typography variant="h5">
-//           <b>Delivered to:</b>
-//           {user.contactAddress}
-//         </Typography>
-//         <Typography variant="h5">
-//           <b>Date:</b>
-//           {date}
-//         </Typography>
-//         <Grid item>
-//           <Autocomplete
-//             id="combo-box-demo"
-//             options={paymentMethods}
-//             getOptionLabel={(option) => option.title}
-//             onChange={(event, value) => setMethod(value)}
-//             style={{ width: "96%", marginLeft: "10px" }}
-//             renderInput={(params) => (
-//               <TextField
-//                 {...params}
-//                 label="Payment Method"
-//                 variant="outlined"
-//               />
-//             )}
-//           />
-//         </Grid>
-//       </DialogContent>
-//       <DialogActions>
-//         <Button
-//           autoFocus
-//           onClick={() => {
-//             handleSubmitPayment();
-//           }}
-//           variant="contained"
-//           style={{ marginRight: "25px" }}
-//         >
-//           Pay
-//         </Button>
-//       </DialogActions>
-//     </Dialog>
-//   );
-// }
