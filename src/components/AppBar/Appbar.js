@@ -18,13 +18,7 @@ import Avatar from "@mui/material/Avatar";
 
 export function Appbar() {
   const user = JSON.parse(localStorage.getItem("user"));
-  // const [opened, setopened] = useState(false);
-  // const handleDrawerOpen = () => {
-  //   setopened(true);
-  // };
-  // const handleDrawerClose = () => {
-  //   setopened(false);
-  // };
+
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -60,20 +54,7 @@ export function Appbar() {
         >
           Mega's Pizza
         </Typography>
-        {/* <Button
-          sx={{ ml: "auto", display: { xs: "none", sm: "block" } }}
-          onClick={() => history.push("/menu")}
-          variant="text"
-        >
-          Home
-        </Button>
-        <Button
-          sx={{ display: { xs: "none", sm: "block" } }}
-          onClick={handleClickOpen}
-          variant="text"
-        >
-          Contact us
-        </Button> */}
+
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Contact</DialogTitle>
           <DialogContent>
@@ -100,7 +81,7 @@ export function Appbar() {
           cart
         </Button> */}
         <IconButton
-          sx={{ ml: { xs: "auto", sm: 0 } }}
+          sx={{ ml: "auto" }}
           className="avatar"
           onClick={handleClick}
           aria-controls={Open ? "basic-menu" : undefined}
@@ -145,49 +126,6 @@ export function Appbar() {
             Log Out
           </MenuItem>
         </Menu>
-        {/* <IconButton
-          sx={{ display: { xs: "block", sm: "none" } }}
-          onClick={handleDrawerOpen}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Drawer
-          sx={{
-            width: "200px",
-            height: "100%",
-            flexShrink: 0,
-            "& .MuiDrawer-paper": {
-              width: "200px",
-              height: "100%",
-              boxSizing: "border-box",
-              backgroundColor: "#fff",
-              color: "black",
-              fontSize: "1em",
-              fontFamily: "Pacifico",
-            },
-          }}
-          anchor="right"
-          open={opened}
-        >
-          <IconButton
-            color="inherit"
-            aria-label="close"
-            component="span"
-            onClick={handleDrawerClose}
-            sx={{ ml: "auto" }}
-          >
-            <CloseIcon />
-          </IconButton>
-          <Button onClick={() => history.push("/menu")} variant="text">
-            Home
-          </Button>
-          <Button onClick={handleClickOpen} variant="text">
-            Contact us
-          </Button>
-          <Button onClick={() => history.push("/cart")} variant="text">
-            cart
-          </Button>
-        </Drawer> */}
       </Toolbar>
     </AppBar>
   );
