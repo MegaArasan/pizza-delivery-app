@@ -1,6 +1,8 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import TextField from "@mui/material/TextField";
 import MailIcon from "@mui/icons-material/Mail";
 import PersonIcon from "@mui/icons-material/Person";
@@ -59,6 +61,14 @@ export function Signup() {
       // console.log(response);
       setOpen(true);
     });
+  };
+   const [text, setText] = React.useState("Show");
+  const [visible, setVisible] = React.useState("password");
+  const icon =
+    visible === "password" ? <VisibilityIcon /> : <VisibilityOffIcon />;
+  const visibility = () => {
+    setVisible((visible) => (visible === "password" ? "text" : "password"));
+    setText((text) => (text === "Show" ? "Hide" : "Show"));
   };
   return (
     <div className="signuppage">
@@ -192,7 +202,14 @@ export function Signup() {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <PasswordIcon />
+                  <LockOutlinedIcon />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="start">
+                  <Tooltip title={text}>
+                    <IconButton onClick={() => visibility()}>{icon}</IconButton>
+                  </Tooltip>
                 </InputAdornment>
               ),
             }}
@@ -200,10 +217,12 @@ export function Signup() {
             name="password"
             required
             label="Password"
+            placeholder="Enter your password"
             sx={{ margin: "4px" }}
             variant="outlined"
             onChange={handleChange}
             onBlur={handleBlur}
+            type={visible}
             value={values.password}
             error={errors.password && touched.password}
             helperText={errors.password && touched.password && errors.password}
