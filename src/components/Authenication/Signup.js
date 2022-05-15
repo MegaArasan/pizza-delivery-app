@@ -1,6 +1,6 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
-import InputAdornment from "@mui/material/InputAdornment";
+import { InputAdornment, Tooltip, IconButton } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import TextField from "@mui/material/TextField";
@@ -14,6 +14,7 @@ import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
 import { API_URL } from "../../globalconstant.js";
 import Snackbar from "@mui/material/Snackbar";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import MuiAlert from "@mui/material/Alert";
 
 export function Signup() {
