@@ -7,7 +7,6 @@ import TextField from "@mui/material/TextField";
 import MailIcon from "@mui/icons-material/Mail";
 import PersonIcon from "@mui/icons-material/Person";
 import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
-import PasswordIcon from "@mui/icons-material/Password";
 import Button from "@mui/material/Button";
 import { useFormik } from "formik";
 import * as Yup from "yup";
